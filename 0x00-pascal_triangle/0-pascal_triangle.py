@@ -15,9 +15,8 @@ def pascal_triangle(n):
         return []
 
     triangle = [[] for i in range(n)]
-    triangle[0].append(1)
 
-    for row in range(1, n):
+    for row in range(n):
         for column in range(row + 1):
             if column == 0 or column == row:
                 triangle[row].append(1)
