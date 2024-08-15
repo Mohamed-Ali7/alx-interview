@@ -15,7 +15,9 @@ try:
     for line in sys.stdin:
         line_parts = line.split()
         if re.search(format_pattern, line.strip()):
-            status_dict[line_parts[7]] += 1
+            status_code = line_parts[7]
+            if status_code in status_dict:
+                status_dict[status_code] += 1
             file_size += int(line_parts[8])
             if line_number == 10:
                 print("File size: {}".format(file_size))
