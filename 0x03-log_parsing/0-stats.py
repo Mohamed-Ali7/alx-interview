@@ -25,8 +25,9 @@ try:
                 line_number = 1
             line_number += 1
 
-finally:
+except KeyboardInterrupt:
     print("File size: {}".format(file_size))
     for key in sorted(status_dict):
         if status_dict[key] > 0:
             print("{}: {}".format(key, status_dict[key]))
+    raise
