@@ -14,7 +14,7 @@ format_pattern = re.compile(
 try:
     for line in sys.stdin:
         line_parts = line.split()
-        if re.match(format_pattern, line.strip()):
+        if format_pattern.fullmatch(line):
 
             status_code = line_parts[7]
             if status_code in status_dict:
