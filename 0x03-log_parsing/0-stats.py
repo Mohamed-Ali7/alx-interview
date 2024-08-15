@@ -8,8 +8,9 @@ file_size = 0
 status_dict = {"200": 0, "301": 0, "400": 0, "401": 0,
                "403": 0, "404": 0, "405": 0, "500": 0}
 line_number = 0
-format_pattern = r'^[0-9\.]+\s-\s\[[0-9-]+\s[0-9:\.]+\]\s' +\
-    r'"\w+\s\/projects\/260 HTTP\/1.1"\s[0-9]{3}\s[0-9]+$'
+format_pattern = format_pattern = r'^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+\s-\s\[' +\
+    r'[0-9]{2}/[A-Za-z]{3}/[0-9]{4}:[0-9]{2}:[0-9]{2}:[0-9]{2}\s' +\
+    r'\+\d{4}\]\s"\w+\s\/projects\/260\sHTTP\/1.1"\s[0-9]{3}\s[0-9]+$'
 
 try:
     for line in sys.stdin:
