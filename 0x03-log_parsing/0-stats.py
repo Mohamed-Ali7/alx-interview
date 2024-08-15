@@ -28,13 +28,14 @@ try:
 
             if line_number == 10:
                 print("File size: {}".format(file_size))
-                for key in sorted(status_dict):
-                    if status_dict[key] > 0:
-                        print("{}: {}".format(key, status_dict[key]))
+                for key, value in sorted(status_dict.items()):
+                    if value > 0:
+                        print("{}: {}".format(key, value))
                 line_number = 0
 
 except KeyboardInterrupt:
     print("File size: {}".format(file_size))
-    for key in sorted(status_dict):
-        if status_dict[key] > 0:
-            print("{}: {}".format(key, status_dict[key]))
+    for key, value in sorted(status_dict.items()):
+        if value > 0:
+            print("{}: {}".format(key, value))
+    raise
