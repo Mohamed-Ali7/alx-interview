@@ -31,8 +31,7 @@ try:
                 line_number = 0
 
 finally:
-    if line_number > 0:
-        print("File size: {}".format(file_size))
-        for key in sorted(status_dict):
-            if status_dict[key] > 0:
-                print("{}: {}".format(key, status_dict[key]))
+    print("File size: {}".format(file_size))
+    for key in sorted(status_dict):
+        if status_dict[key] > 0:
+            print("{}: {}".format(key, status_dict[key]))
