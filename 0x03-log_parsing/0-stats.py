@@ -34,8 +34,9 @@ try:
                 line_number = 0
 
 except KeyboardInterrupt:
-    print("File size: {}".format(file_size))
-    for key, value in sorted(status_dict.items()):
-        if value > 0:
-            print("{}: {}".format(key, value))
-    raise
+    pass
+
+print("File size: {}".format(file_size))
+for key, value in sorted(status_dict.items()):
+    if value > 0:
+        print("{}: {}".format(key, value))
