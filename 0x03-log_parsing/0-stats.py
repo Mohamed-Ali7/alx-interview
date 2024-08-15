@@ -18,15 +18,15 @@ try:
             status_dict[line_parts[7]] += 1
             file_size += int(line_parts[8])
             if line_number == 10:
-                print(f"File size: {file_size}")
+                print("File size: {}".format(file_size))
                 for key in sorted(status_dict):
                     if status_dict[key] > 0:
-                        print(f"{key}: {status_dict[key]}")
-                        line_number = 1
+                        print("{}: {}".format(key, status_dict[key]))
+                line_number = 1
             line_number += 1
 
 except KeyboardInterrupt:
-    print(f"File size: {file_size}")
-    for key, value in status_dict.items():
-        if value > 0:
-            print(f"{key}: {value}")
+    print("File size: {}".format(file_size))
+    for key in sorted(status_dict):
+        if status_dict[key] > 0:
+            print("{}: {}".format(key, status_dict[key]))
