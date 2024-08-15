@@ -13,14 +13,15 @@ format_pattern = r'^[0-9\.]+\s-\s\[[0-9-]+\s[0-9:\.]+\]\s' +\
 
 try:
     for line in sys.stdin:
+        line_parts = line.split()
         if re.search(format_pattern, line.strip()):
-            status_dict[line.split()[7]] += 1
-            file_size += int(line.split()[8])
+            status_dict[line_parts[7]] += 1
+            file_size += int(line_parts[8])
             if line_number == 10:
                 print(f"File size: {file_size}")
-                for key, value in status_dict.items():
-                    if value > 0:
-                        print(f"{key}: {value}")
+                for key in sorted(status_dict):
+                    if status_dict[key] > 0:
+                        print(f"{key}: {status_dict[key]}")
                         line_number = 1
             line_number += 1
 
