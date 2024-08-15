@@ -1,39 +1,38 @@
 #!/usr/bin/python3
-"""
-Log parsing
-"""
+"""This module reads stdin line by line and computes metrics"""
 
 import sys
+import re
 
-if __name__ == '__main__':
+file_size = 0
+status_dict = {"200": 0, "301": 0, "400": 0, "401": 0,
+               "403": 0, "404": 0, "405": 0, "500": 0}
+line_number = 0
+format_pattern = r'^[0-9\.]+\s-\s\[[0-9-]+\s[0-9:\.]+\]\s' +\
+    r'"\w+\s\/projects\/260 HTTP\/1.1"\s[0-9]{3}\s[0-9]+$'
 
-    filesize, count = 0, 0
-    codes = ["200", "301", "400", "401", "403", "404", "405", "500"]
-    stats = {k: 0 for k in codes}
+try:
+    for line in sys.stdin:
+        line = line.strip()
+        line_parts = line.split()
+        if re.match(format_pattern, line):
 
-    def print_stats(stats: dict, file_size: int) -> None:
-        print("File size: {:d}".format(filesize))
-        for k, v in sorted(stats.items()):
-            if v:
-                print("{}: {}".format(k, v))
+            status_code = line_parts[7]
+            if status_code in status_dict:
+                status_dict[status_code] += 1
 
-    try:
-        for line in sys.stdin:
-            count += 1
-            data = line.split()
-            try:
-                status_code = data[-2]
-                if status_code in stats:
-                    stats[status_code] += 1
-            except BaseException:
-                pass
-            try:
-                filesize += int(data[-1])
-            except BaseException:
-                pass
-            if count % 10 == 0:
-                print_stats(stats, filesize)
-        print_stats(stats, filesize)
-    except KeyboardInterrupt:
-        print_stats(stats, filesize)
-        raise
+            file_size += int(line_parts[8])
+            line_number += 1
+
+            if line_number == 10:
+                print("File size: {}".format(file_size))
+                for key in sorted(status_dict):
+                    if status_dict[key] > 0:
+                        print("{}: {}".format(key, status_dict[key]))
+                line_number = 0
+
+finally:
+    print("File size: {}".format(file_size))
+    for key in sorted(status_dict):
+        if status_dict[key] > 0:
+            print("{}: {}".format(key, status_dict[key]))
