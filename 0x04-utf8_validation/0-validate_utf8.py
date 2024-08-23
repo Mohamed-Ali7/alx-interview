@@ -3,7 +3,9 @@
 
 
 def validUTF8(data):
+    """determines if a given data set represents a valid UTF-8 encoding."""
     def validateBytes(start, n):
+        """Helper function to check if the data is a valid UTF-8 encoding."""
         for i in range(start + 1, start + n + 1):
             if i >= len(data) or data[i] >> 6 != 0b10:
                 return False
