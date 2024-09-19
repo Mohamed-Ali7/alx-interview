@@ -26,7 +26,7 @@ def makeChange(coins: list, total):
             return number_of_coins
 
         for r in range(i + 1, len(coins)):
-            if coins[r] > total:
+            if coins[r] > reminder:
                 continue
 
             number_of_coins += reminder // coins[r]
