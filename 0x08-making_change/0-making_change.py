@@ -6,7 +6,7 @@
 def makeChange(coins: list, total):
     """Returns fewest number of coins needed to meet total"""
 
-    if total == 0:
+    if total <= 0:
         return 0
 
     reminder = 0
