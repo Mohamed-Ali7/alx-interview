@@ -6,24 +6,23 @@
 def list_filter(my_list):
     """Filter a list to make it only contains prime numbers"""
 
-    if not my_list:
-        return []
+    primes = []
 
-    list_len = len(my_list)
-    cur_index = 0
-    cur_num_index = 0
-    for cur in my_list:
-        cur_num = my_list[cur_num_index]
+    for num in my_list:
+        is_prime = True
+        if num < 2:
+            is_prime = False
+        elif num == 2:
+            primes.append(num)
+        else:
+            for i in range(2, int(num ** 0.5) + 1):
+                if num % i == 0:
+                    is_prime = False
+                    break
+            if is_prime:
+                primes.append(num)
 
-        for num in my_list[cur_num_index + 1:]:
-            if num % cur_num == 0 and num >= (cur_num * cur_num):
-                del my_list[cur_index + (cur_num_index + 1)]
-            else:
-                cur_index += 1
-
-        cur_num_index += 1
-
-    return my_list
+    return primes
 
 
 def isWinner(x, nums):
@@ -43,13 +42,6 @@ def isWinner(x, nums):
 
     Return: name of the player that won the most rounds
     """
-
-    maria_turn = True
-    ben_turn = False
-
-    maria_wins = False
-    ben_wins = False
-
     maria_total_wins = 0
     ben_total_wins = 0
 
@@ -61,30 +53,13 @@ def isWinner(x, nums):
         one_turn_arr = [r for r in range(2, nums[i] + 1)]
 
         filtered_list = list_filter(one_turn_arr)
-        maria_turn = True
 
-        for num in filtered_list:
-            ben_wins = False
-            maria_wins = False
+        filtered_list_len = len(filtered_list)
 
-            if maria_turn:
-                maria_turn = False
-                ben_turn = True
-                maria_wins = True
-
-            elif ben_turn:
-                maria_turn = True
-                ben_turn = False
-                ben_wins = True
-
-        if not filtered_list:
-            maria_wins = False
-            ben_wins = True
-
-        if maria_wins:
-            maria_total_wins += 1
-        elif ben_wins:
+        if filtered_list_len % 2 == 0:
             ben_total_wins += 1
+        else:
+            maria_total_wins += 1
 
     if maria_total_wins > ben_total_wins:
         winner = 'Maria'
