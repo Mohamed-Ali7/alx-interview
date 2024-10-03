@@ -57,7 +57,7 @@ def isWinner(x, nums):
 
         filtered_list_len = len(filtered_list)
 
-        if filtered_list_len % 2 == 0:
+        if filtered_list_len % 2 == 0 and filtered_list:
             ben_total_wins += 1
         else:
             maria_total_wins += 1
