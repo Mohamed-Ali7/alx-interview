@@ -3,24 +3,26 @@
 """This module contains isWinner() function"""
 
 
-def list_filter(my_list):
+def list_filter(n):
     """Filter a list to make it only contains prime numbers"""
 
     primes = []
+    prime = [True for i in range(n + 1)]
+    p = 2
+    while (p * p <= n):
 
-    for num in my_list:
-        is_prime = True
-        if num < 2:
-            is_prime = False
-        elif num == 2:
-            primes.append(num)
-        else:
-            for i in range(2, int(num ** 0.5) + 1):
-                if num % i == 0:
-                    is_prime = False
-                    break
-            if is_prime:
-                primes.append(num)
+        # If prime[p] is not
+        # changed, then it is a prime
+        if prime[p]:
+
+            # Update all multiples of p
+            for i in range(p * p, n + 1, p):
+                prime[i] = False
+        p += 1
+
+    for p in range(2, n+1):
+        if prime[p]:
+            primes.append(p)
 
     return primes
 
@@ -49,10 +51,9 @@ def isWinner(x, nums):
 
     winner = ''
 
-    for i in range(x):
-        one_turn_arr = [r for r in range(2, nums[i] + 1)]
+    for num in nums:
 
-        filtered_list = list_filter(one_turn_arr)
+        filtered_list = list_filter(num)
 
         filtered_list_len = len(filtered_list)
 
