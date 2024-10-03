@@ -9,13 +9,19 @@ def list_filter(my_list):
     if not my_list:
         return []
 
-    cur_num = my_list[0]
+    list_len = len(my_list)
     cur_index = 0
-    for num in my_list:
-        if num % cur_num == 0 and num >= (cur_num * cur_num):
-            del my_list[cur_index]
+    cur_num_index = 0
+    for cur in my_list:
+        cur_num = my_list[cur_num_index]
 
-        cur_index += 1
+        for num in my_list[cur_num_index + 1:]:
+            if num % cur_num == 0 and num >= (cur_num * cur_num):
+                del my_list[cur_index + (cur_num_index + 1)]
+            else:
+                cur_index += 1
+
+        cur_num_index += 1
 
     return my_list
 
@@ -55,6 +61,7 @@ def isWinner(x, nums):
         one_turn_arr = [r for r in range(2, nums[i] + 1)]
 
         filtered_list = list_filter(one_turn_arr)
+        maria_turn = True
 
         for num in filtered_list:
             ben_wins = False
