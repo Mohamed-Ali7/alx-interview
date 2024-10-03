@@ -3,6 +3,23 @@
 """This module contains isWinner() function"""
 
 
+def list_filter(my_list):
+    """Filter a list to make it only contains prime numbers"""
+
+    if not my_list:
+        return []
+
+    cur_num = my_list[0]
+    cur_index = 0
+    for num in my_list:
+        if num % cur_num == 0 and num >= (cur_num * cur_num):
+            del my_list[cur_index]
+
+        cur_index += 1
+
+    return my_list
+
+
 def isWinner(x, nums):
     """
     Maria and Ben are playing a game. Given a set of consecutive integers
@@ -24,36 +41,47 @@ def isWinner(x, nums):
     maria_turn = True
     ben_turn = False
 
-    maria_wins = 0
-    ben_wins = 0
+    maria_wins = False
+    ben_wins = False
+
+    maria_total_wins = 0
+    ben_total_wins = 0
 
     one_turn_arr = []
-    cur_num = 0
 
     winner = ''
 
     for i in range(x):
-        one_turn_arr = [r for r in range(1, nums[i] + 1)]
+        one_turn_arr = [r for r in range(2, nums[i] + 1)]
 
-        turn_arr_len = len(one_turn_arr)
-        for r in range(turn_arr_len):
-            cur_num = one_turn_arr[r]
-            for num in one_turn_arr[r + 1:]:
-                if num % cur_num == 0 and cur_num * cur_num >= num:
-                    if maria_turn:
-                        maria_turn = False
-                        ben_turn = True
-                        maria_wins += 1
-                        ben_wins = 0
-                    elif ben_turn:
-                        maria_turn = True
-                        ben_turn = False
-                        ben_wins += 1
-                        maria_wins = 0
+        filtered_list = list_filter(one_turn_arr)
 
-    if maria_wins > ben_wins:
+        for num in filtered_list:
+            ben_wins = False
+            maria_wins = False
+
+            if maria_turn:
+                maria_turn = False
+                ben_turn = True
+                maria_wins = True
+
+            elif ben_turn:
+                maria_turn = True
+                ben_turn = False
+                ben_wins = True
+
+        if not filtered_list:
+            maria_wins = False
+            ben_wins = True
+
+        if maria_wins:
+            maria_total_wins += 1
+        elif ben_wins:
+            ben_total_wins += 1
+
+    if maria_total_wins > ben_total_wins:
         winner = 'Maria'
-    elif maria_wins < ben_wins:
+    elif maria_total_wins < ben_total_wins:
         winner = 'Ben'
     else:
         return None
